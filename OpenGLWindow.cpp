@@ -44,8 +44,7 @@
 /**
  * OpenGLWindow constructor.
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 OpenGLWindow::OpenGLWindow(QWindow* parent)
     : QWindow(parent),
@@ -62,8 +61,7 @@ OpenGLWindow::OpenGLWindow(QWindow* parent)
  * 
  * Posts an UpdateRequest to Qt, which will call renderNow() (via event()).
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 void OpenGLWindow::renderLater() {
     if (!update_pending_) {
@@ -78,10 +76,9 @@ void OpenGLWindow::renderLater() {
  * 
  * Called when any event happens.
  * 
- * @return  True, if event was handled.
+ * :returns: True, if event was handled.
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 bool OpenGLWindow::event(QEvent* event) {
     if (event->type() == QEvent::UpdateRequest) {
@@ -111,8 +108,7 @@ bool OpenGLWindow::event(QEvent* event) {
  * 
  * Called when the window is exposed?
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 void OpenGLWindow::exposeEvent(QExposeEvent* event) {
     Q_UNUSED(event);
@@ -128,8 +124,7 @@ void OpenGLWindow::exposeEvent(QExposeEvent* event) {
  * 
  * Called when the window is resized?
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 void OpenGLWindow::resizeEvent(QResizeEvent* event) {
     Q_UNUSED(event);
@@ -149,8 +144,7 @@ void OpenGLWindow::resizeEvent(QResizeEvent* event) {
  *  4. Updates the GameEngine (calls GameEngine::Update() via render())
  *  5. Swaps buffers with OpenGL
  * 
- * @author Digia Plc
- * @since 2014-03-12
+ * :codeauthor: Digia Plc
  */
 void OpenGLWindow::renderNow() {
     if (!isExposed()) {
@@ -207,8 +201,7 @@ void OpenGLWindow::renderNow() {
 /**
  * setAnimating.
  * 
- * @author Digia Plc
- * @since 2013-01-22
+ * :codeauthor: Digia Plc
  */
 void OpenGLWindow::setAnimating(bool animating) {
     animating_ = animating;
