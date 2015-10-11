@@ -49,7 +49,9 @@ namespace detail
 		//////////////////////////////////////
 		// Implementation detail
 
+#if !defined SWIG
 		enum ctor{_null};
+#endif //!defined SWIG
 
 		typedef tvec3<T, P> type;
 		typedef tvec3<bool, P> bool_type;
@@ -64,6 +66,7 @@ namespace detail
 		//////////////////////////////////////
 		// Data
 
+#if !defined SWIG
 #		if(GLM_HAS_ANONYMOUS_UNION && defined(GLM_SWIZZLE))
 			union
 			{
@@ -90,6 +93,12 @@ namespace detail
 				GLM_SWIZZLE_GEN_VEC_FROM_VEC3(T, P, detail::tvec3, detail::tvec2, detail::tvec3, detail::tvec4)
 #			endif
 #		endif//GLM_LANG
+#else //!defined SWIG
+T x, r, s;
+T y, g, t;
+T z, b, p;
+GLM_SWIZZLE_GEN_VEC_FROM_VEC3(T, P, detail::tvec3, detail::tvec2, detail::tvec3, detail::tvec4)
+#endif //!defined SWIG
 
 		//////////////////////////////////////
 		// Accesses
@@ -108,8 +117,10 @@ namespace detail
 		//////////////////////////////////////
 		// Explicit basic constructors
 
+#if !defined SWIG
 		GLM_FUNC_DECL explicit tvec3(
 			ctor);
+#endif //!defined SWIG
 		GLM_FUNC_DECL explicit tvec3(
 			T const & s);
 		GLM_FUNC_DECL tvec3(
