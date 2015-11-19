@@ -26,11 +26,11 @@
  */
 
 /*!
- * NOTE: This is a slightly modified version for use with SWIG.
+ * SDL types for HactEngine's SWIG wrappers.
  */
 
-#ifndef _SDL_events_h
-#define _SDL_events_h
+#ifndef _SDL_SWIG_types_h
+#define _SDL_SWIG_types_h
 
 #include "SDL_stdinc.h"
 #include "SDL_error.h"
@@ -42,6 +42,23 @@
 #include "SDL_quit.h"
 #include "SDL_gesture.h"
 #include "SDL_touch.h"
+
+/*!******************************************************** From SDL_stdinc.h */
+typedef enum
+{
+    SDL_FALSE = 0,
+    SDL_TRUE = 1
+} SDL_bool;
+
+typedef int8_t Sint8;
+typedef uint8_t Uint8;
+typedef int16_t Sint16;
+typedef uint16_t Uint16;
+typedef int32_t Sint32;
+typedef uint32_t Uint32;
+typedef int64_t Sint64;
+typedef uint64_t Uint64;
+/*!************************************************************* SDL_stdinc.h */
 
 #include "begin_code.h"
 /* Set up for C function definitions, even when using C++ */
@@ -558,198 +575,12 @@ typedef union SDL_Event
 } SDL_Event;
 
 
-#if !defined SWIG
-
-/* Function prototypes */
-
-/**
- *  Pumps the event loop, gathering events from the input devices.
- *
- *  This function updates the event queue and internal input device state.
- *
- *  This should only be run in the thread that sets the video mode.
- */
-extern DECLSPEC void SDLCALL SDL_PumpEvents(void);
-
-/* @{ */
-typedef enum
-{
-    SDL_ADDEVENT,
-    SDL_PEEKEVENT,
-    SDL_GETEVENT
-} SDL_eventaction;
-
-/**
- *  Checks the event queue for messages and optionally returns them.
- *
- *  If \c action is ::SDL_ADDEVENT, up to \c numevents events will be added to
- *  the back of the event queue.
- *
- *  If \c action is ::SDL_PEEKEVENT, up to \c numevents events at the front
- *  of the event queue, within the specified minimum and maximum type,
- *  will be returned and will not be removed from the queue.
- *
- *  If \c action is ::SDL_GETEVENT, up to \c numevents events at the front
- *  of the event queue, within the specified minimum and maximum type,
- *  will be returned and will be removed from the queue.
- *
- *  \return The number of events actually stored, or -1 if there was an error.
- *
- *  This function is thread-safe.
- */
-extern DECLSPEC int SDLCALL SDL_PeepEvents(SDL_Event * events, int numevents,
-                                           SDL_eventaction action,
-                                           Uint32 minType, Uint32 maxType);
-/* @} */
-
-/**
- *  Checks to see if certain event types are in the event queue.
- */
-extern DECLSPEC SDL_bool SDLCALL SDL_HasEvent(Uint32 type);
-extern DECLSPEC SDL_bool SDLCALL SDL_HasEvents(Uint32 minType, Uint32 maxType);
-
-/**
- *  This function clears events from the event queue
- *  This function only affects currently queued events. If you want to make
- *  sure that all pending OS events are flushed, you can call SDL_PumpEvents()
- *  on the main thread immediately before the flush call.
- */
-extern DECLSPEC void SDLCALL SDL_FlushEvent(Uint32 type);
-extern DECLSPEC void SDLCALL SDL_FlushEvents(Uint32 minType, Uint32 maxType);
-
-/**
- *  \brief Polls for currently pending events.
- *
- *  \return 1 if there are any pending events, or 0 if there are none available.
- *
- *  \param event If not NULL, the next event is removed from the queue and
- *               stored in that area.
- */
-extern DECLSPEC int SDLCALL SDL_PollEvent(SDL_Event * event);
-
-/**
- *  \brief Waits indefinitely for the next available event.
- *
- *  \return 1, or 0 if there was an error while waiting for events.
- *
- *  \param event If not NULL, the next event is removed from the queue and
- *               stored in that area.
- */
-extern DECLSPEC int SDLCALL SDL_WaitEvent(SDL_Event * event);
-
-/**
- *  \brief Waits until the specified timeout (in milliseconds) for the next
- *         available event.
- *
- *  \return 1, or 0 if there was an error while waiting for events.
- *
- *  \param event If not NULL, the next event is removed from the queue and
- *               stored in that area.
- *  \param timeout The timeout (in milliseconds) to wait for next event.
- */
-extern DECLSPEC int SDLCALL SDL_WaitEventTimeout(SDL_Event * event,
-                                                 int timeout);
-
-/**
- *  \brief Add an event to the event queue.
- *
- *  \return 1 on success, 0 if the event was filtered, or -1 if the event queue
- *          was full or there was some other error.
- */
-extern DECLSPEC int SDLCALL SDL_PushEvent(SDL_Event * event);
-
-typedef int (SDLCALL * SDL_EventFilter) (void *userdata, SDL_Event * event);
-
-/**
- *  Sets up a filter to process all events before they change internal state and
- *  are posted to the internal event queue.
- *
- *  The filter is prototyped as:
- *  \code
- *      int SDL_EventFilter(void *userdata, SDL_Event * event);
- *  \endcode
- *
- *  If the filter returns 1, then the event will be added to the internal queue.
- *  If it returns 0, then the event will be dropped from the queue, but the
- *  internal state will still be updated.  This allows selective filtering of
- *  dynamically arriving events.
- *
- *  \warning  Be very careful of what you do in the event filter function, as
- *            it may run in a different thread!
- *
- *  There is one caveat when dealing with the ::SDL_QuitEvent event type.  The
- *  event filter is only called when the window manager desires to close the
- *  application window.  If the event filter returns 1, then the window will
- *  be closed, otherwise the window will remain open if possible.
- *
- *  If the quit event is generated by an interrupt signal, it will bypass the
- *  internal queue and be delivered to the application at the next event poll.
- */
-extern DECLSPEC void SDLCALL SDL_SetEventFilter(SDL_EventFilter filter,
-                                                void *userdata);
-
-/**
- *  Return the current event filter - can be used to "chain" filters.
- *  If there is no event filter set, this function returns SDL_FALSE.
- */
-extern DECLSPEC SDL_bool SDLCALL SDL_GetEventFilter(SDL_EventFilter * filter,
-                                                    void **userdata);
-
-/**
- *  Add a function which is called when an event is added to the queue.
- */
-extern DECLSPEC void SDLCALL SDL_AddEventWatch(SDL_EventFilter filter,
-                                               void *userdata);
-
-/**
- *  Remove an event watch function added with SDL_AddEventWatch()
- */
-extern DECLSPEC void SDLCALL SDL_DelEventWatch(SDL_EventFilter filter,
-                                               void *userdata);
-
-/**
- *  Run the filter function on the current event queue, removing any
- *  events for which the filter returns 0.
- */
-extern DECLSPEC void SDLCALL SDL_FilterEvents(SDL_EventFilter filter,
-                                              void *userdata);
-
-/* @{ */
-#define SDL_QUERY   -1
-#define SDL_IGNORE   0
-#define SDL_DISABLE  0
-#define SDL_ENABLE   1
-
-/**
- *  This function allows you to set the state of processing certain events.
- *   - If \c state is set to ::SDL_IGNORE, that event will be automatically
- *     dropped from the event queue and will not event be filtered.
- *   - If \c state is set to ::SDL_ENABLE, that event will be processed
- *     normally.
- *   - If \c state is set to ::SDL_QUERY, SDL_EventState() will return the
- *     current processing state of the specified event.
- */
-extern DECLSPEC Uint8 SDLCALL SDL_EventState(Uint32 type, int state);
-/* @} */
-#define SDL_GetEventState(type) SDL_EventState(type, SDL_QUERY)
-
-/**
- *  This function allocates a set of user-defined events, and returns
- *  the beginning event number for that set of events.
- *
- *  If there aren't enough user-defined events left, this function
- *  returns (Uint32)-1
- */
-extern DECLSPEC Uint32 SDLCALL SDL_RegisterEvents(int numevents);
-
-#endif //!defined SWIG
-
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus
 }
 #endif
 #include "close_code.h"
 
-#endif /* _SDL_events_h */
+#endif /* _SDL_SWIG_types_h */
 
 /* vi: set ts=4 sw=4 expandtab: */

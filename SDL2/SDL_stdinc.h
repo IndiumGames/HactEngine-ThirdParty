@@ -25,8 +25,14 @@
  *  This is a general header that includes C language support.
  */
 
+/*!
+ * NOTE: This is a slightly modified version for use with SWIG.
+ */
+
 #ifndef _SDL_stdinc_h
 #define _SDL_stdinc_h
+
+#if !defined SWIG
 
 #include "SDL_config.h"
 
@@ -117,6 +123,8 @@
      (SDL_static_cast(Uint32, SDL_static_cast(Uint8, (B))) << 8) | \
      (SDL_static_cast(Uint32, SDL_static_cast(Uint8, (C))) << 16) | \
      (SDL_static_cast(Uint32, SDL_static_cast(Uint8, (D))) << 24))
+
+#endif //!defined SWIG
 
 /**
  *  \name Basic data types
@@ -291,6 +299,8 @@ SDL_COMPILE_TIME_ASSERT(enum, sizeof(SDL_DUMMY_ENUM) == sizeof(int));
 #endif
 #endif /* DOXYGEN_SHOULD_IGNORE_THIS */
 /** \endcond */
+
+#if !defined SWIG
 
 #include "begin_code.h"
 /* Set up for C function definitions, even when using C++ */
@@ -521,6 +531,8 @@ SDL_FORCE_INLINE void *SDL_memcpy4(SDL_OUT_BYTECAP(dwords*4) void *dst, SDL_IN_B
 }
 #endif
 #include "close_code.h"
+
+#endif //!defined SWIG
 
 #endif /* _SDL_stdinc_h */
 
