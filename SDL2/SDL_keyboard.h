@@ -24,6 +24,10 @@
  *
  *  Include file for SDL keyboard event handling
  */
+ 
+ /*!
+ * NOTE: This is a slightly modified version for use with SWIG.
+ */
 
 #ifndef _SDL_keyboard_h
 #define _SDL_keyboard_h
@@ -51,6 +55,9 @@ typedef struct SDL_Keysym
     Uint16 mod;                 /**< current key modifiers */
     Uint32 unused;
 } SDL_Keysym;
+
+
+#if !defined SWIG
 
 /* Function prototypes */
 
@@ -205,6 +212,8 @@ extern DECLSPEC SDL_bool SDLCALL SDL_HasScreenKeyboardSupport(void);
  *  \sa SDL_HasScreenKeyboardSupport()
  */
 extern DECLSPEC SDL_bool SDLCALL SDL_IsScreenKeyboardShown(SDL_Window *window);
+
+#endif //!defined SWIG
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus
