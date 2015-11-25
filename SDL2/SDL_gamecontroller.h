@@ -25,6 +25,10 @@
  *  Include file for SDL game controller event handling
  */
 
+ /*!
+ * NOTE: This is a slightly modified version for use with SWIG.
+ */
+
 #ifndef _SDL_gamecontroller_h
 #define _SDL_gamecontroller_h
 
@@ -82,6 +86,7 @@ typedef struct SDL_GameControllerButtonBind
 
 } SDL_GameControllerButtonBind;
 
+#if !defined SWIG
 
 /**
  *  To count the number of game controllers in the system for the following:
@@ -114,7 +119,7 @@ typedef struct SDL_GameControllerButtonBind
  *  A community sourced database of controllers is available at https://raw.github.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt
  *
  *  If \c freerw is non-zero, the stream will be closed after being read.
- * 
+ *
  * \return number of mappings added, -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_GameControllerAddMappingsFromRW( SDL_RWops * rw, int freerw );
@@ -207,6 +212,9 @@ extern DECLSPEC int SDLCALL SDL_GameControllerEventState(int state);
 extern DECLSPEC void SDLCALL SDL_GameControllerUpdate(void);
 
 
+#endif //!defined SWIG
+
+
 /**
  *  The list of axes available from a controller
  */
@@ -221,6 +229,10 @@ typedef enum
     SDL_CONTROLLER_AXIS_TRIGGERRIGHT,
     SDL_CONTROLLER_AXIS_MAX
 } SDL_GameControllerAxis;
+
+
+#if !defined SWIG
+
 
 /**
  *  turn this string into a axis mapping
@@ -251,6 +263,10 @@ extern DECLSPEC Sint16 SDLCALL
 SDL_GameControllerGetAxis(SDL_GameController *gamecontroller,
                           SDL_GameControllerAxis axis);
 
+
+#endif //!defined SWIG
+
+
 /**
  *  The list of buttons available from a controller
  */
@@ -274,6 +290,10 @@ typedef enum
     SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
     SDL_CONTROLLER_BUTTON_MAX
 } SDL_GameControllerButton;
+
+
+#if !defined SWIG
+
 
 /**
  *  turn this string into a button mapping
@@ -305,6 +325,9 @@ extern DECLSPEC Uint8 SDLCALL SDL_GameControllerGetButton(SDL_GameController *ga
  *  Close a controller previously opened with SDL_GameControllerOpen().
  */
 extern DECLSPEC void SDLCALL SDL_GameControllerClose(SDL_GameController *gamecontroller);
+
+
+#endif //!defined SWIG
 
 
 /* Ends C function definitions when using C++ */

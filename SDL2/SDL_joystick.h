@@ -35,6 +35,10 @@
  *
  *
  */
+ 
+ /*!
+ * NOTE: This is a slightly modified version for use with SWIG.
+ */
 
 #ifndef _SDL_joystick_h
 #define _SDL_joystick_h
@@ -71,6 +75,7 @@ typedef struct {
 
 typedef Sint32 SDL_JoystickID;
 
+#if !defined SWIG
 
 /* Function prototypes */
 /**
@@ -185,6 +190,10 @@ extern DECLSPEC int SDLCALL SDL_JoystickEventState(int state);
 extern DECLSPEC Sint16 SDLCALL SDL_JoystickGetAxis(SDL_Joystick * joystick,
                                                    int axis);
 
+
+#endif //!defined SWIG
+
+
 /**
  *  \name Hat positions
  */
@@ -199,6 +208,10 @@ extern DECLSPEC Sint16 SDLCALL SDL_JoystickGetAxis(SDL_Joystick * joystick,
 #define SDL_HAT_LEFTUP      (SDL_HAT_LEFT|SDL_HAT_UP)
 #define SDL_HAT_LEFTDOWN    (SDL_HAT_LEFT|SDL_HAT_DOWN)
 /* @} */
+
+
+#if !defined SWIG
+
 
 /**
  *  Get the current state of a POV hat on a joystick.
@@ -242,6 +255,8 @@ extern DECLSPEC Uint8 SDLCALL SDL_JoystickGetButton(SDL_Joystick * joystick,
  */
 extern DECLSPEC void SDLCALL SDL_JoystickClose(SDL_Joystick * joystick);
 
+
+#endif //!defined SWIG
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus
